@@ -55,6 +55,7 @@ sudo apt-get install -y \
   python2.7-dev
 
 sudo pip install numpy
+sudo pip install "picamera[array]"
 
 cd ~
 wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.2.0.zip
@@ -62,3 +63,18 @@ wget -O opencv-contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.2.
 unzip opencv.zip
 unzip opencv_contrib.zip
 
+cd ~/opencv-3.2.0/
+mkdir build
+cd build
+cmake \
+  -D CMAKE_BUILD_TYPE=RELEASE \
+  -D CMAKE_INSTALL_PREFIX=/usr/local \
+  -D INSTALL_C_EXAMPLES=OFF \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.2.0/modules \
+  -D BUILD_EXAMPLES=ON \
+  -D ENABLE_NEON=ON ..
+
+sudo make
+sudo make install
+sudo ldconfig
